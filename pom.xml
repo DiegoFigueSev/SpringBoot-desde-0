@@ -80,6 +80,13 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Source: https://mvnrepository.com/artifact/org.springframework.data/spring-data-jdbc -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jdbc</artifactId>
+			<version>4.1.0-M2</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
