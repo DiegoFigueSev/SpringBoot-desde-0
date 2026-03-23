@@ -28,6 +28,7 @@ public class PersonalRepositoryImpl implements IPersonalInfoRepository{
         info.setLastName(rs.getString("last_name"));
         info.setTitle(rs.getString("title"));
         info.setProfileDescription(rs.getString("profile_description"));
+        info.setEmail(rs.getString("email"));
         return info;
     };
 
@@ -35,23 +36,23 @@ public class PersonalRepositoryImpl implements IPersonalInfoRepository{
     public PersonalInfo save(PersonalInfo personalInfo) {
         if (personalInfo.getId() == null){
             String sql = """
-                INSERT INTO personal_info(first_name, last_name, title, profile_description)
+                INSERT INTO personal_info(first_name, last_name, title, profile_description, email)
                 VALUES
-                      (?, ?, ?, ?);
+                      (?, ?, ?, ?, ?);
             """;
             jdbcTemplate.update(
                         sql,
-                        personalInfo.getFirstName(), personalInfo.getLastName(), personalInfo.getTitle(), personalInfo.getProfileDescription()
+                        personalInfo.getFirstName(), personalInfo.getLastName(), personalInfo.getTitle(), personalInfo.getProfileDescription(), personalInfo.getEmail()
                     );
         } else {
             String sql = """
                 UPDATE personal_info
-                SET first_name = ? , last_name = ? , title = ?, profile_description = ?
+                SET first_name = ? , last_name = ? , title = ?, profile_description = ?, email=?
                 WHERE id=?
             """;
             jdbcTemplate.update(
                     sql,
-                    personalInfo.getFirstName(), personalInfo.getLastName(), personalInfo.getTitle(), personalInfo.getProfileDescription(), personalInfo.getId()
+                    personalInfo.getFirstName(), personalInfo.getLastName(), personalInfo.getTitle(), personalInfo.getProfileDescription(), personalInfo.getEmail() ,personalInfo.getId()
             );
         }
         return findAll().getLast();

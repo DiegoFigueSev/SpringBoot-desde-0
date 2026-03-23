@@ -1,5 +1,6 @@
 package com.diegofigueroa.spring_desde_0.src.model.jdbc_model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter @Setter
@@ -17,8 +18,9 @@ public class Education {
                             ON DELETE CASCADE
     );
      */
-   private Long id;
-   private String degree;
-   private String description;
-   private Long personalInfoId;
+    @NotBlank
+    private Long id;
+    private String degree;
+    private String description;
+    private Long personalInfoId;
 }

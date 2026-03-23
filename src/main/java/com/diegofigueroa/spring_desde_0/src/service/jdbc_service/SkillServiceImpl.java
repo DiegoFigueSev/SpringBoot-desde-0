@@ -1,9 +1,14 @@
 package com.diegofigueroa.spring_desde_0.src.service.jdbc_service;
 
+import com.diegofigueroa.spring_desde_0.src.exceptions.ValidationException;
 import com.diegofigueroa.spring_desde_0.src.model.jdbc_model.Skill;
 import com.diegofigueroa.spring_desde_0.src.repository.jdbc_repository.ISkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +18,17 @@ import java.util.Optional;
 public class SkillServiceImpl implements ISkillService{
 
     private final ISkillRepository repository;
+    private final Validator validator;
 
     @Override
+    @Transactional()
     public Skill save(Optional<Skill> skill) {
+        if (skill.isEmpty()) throw new IllegalArgumentException("El argumento skill no puede estar vacio");
+        BindingResult bindingResult = new BeanPropertyBindingResult(skill.get(), "skill");
+        validator.validate(skill.get(), bindingResult);
+        if (bindingResult.hasErrors()){
+            throw new ValidationException(bindingResult);
+        }
         return repository.save(skill);
     }
 
