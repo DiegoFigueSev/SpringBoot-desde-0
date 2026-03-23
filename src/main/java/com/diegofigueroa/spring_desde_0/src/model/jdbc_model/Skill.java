@@ -5,7 +5,7 @@ import lombok.*;
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @ToString
-public class Skills {
+public class Skill {
     /*
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL ,
