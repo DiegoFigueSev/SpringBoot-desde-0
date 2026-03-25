@@ -2,6 +2,7 @@ package com.diegofigueroa.spring_desde_0.src.controler.jdbc_controller;
 
 import com.diegofigueroa.spring_desde_0.src.model.jdbc_model.PersonalInfo;
 import com.diegofigueroa.spring_desde_0.src.service.jdbc_service.IPersonalInfoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

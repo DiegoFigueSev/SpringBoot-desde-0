@@ -23,8 +23,11 @@ public class SkillServiceImpl implements ISkillService{
     @Override
     @Transactional()
     public Skill save(Optional<Skill> skill) {
-        if (skill.isEmpty()) throw new IllegalArgumentException("El argumento skill no puede estar vacio");
-        BindingResult bindingResult = new BeanPropertyBindingResult(skill.get(), "skill");
+
+        var realSkill = skill.orElseThrow(() -> new IllegalArgumentException("El argumento skill no puede estar vacio"));
+
+        BindingResult bindingResult = new BeanPropertyBindingResult(realSkill, "skill");
+
         validator.validate(skill.get(), bindingResult);
         if (bindingResult.hasErrors()){
             throw new ValidationException(bindingResult);

@@ -34,7 +34,7 @@ public class SkillRepositoryImpl implements ISkillRepository{
         """;
         var skillAux = skill.get();
         jdbcTemplate.update(query, skillAux.getName(), skillAux.getLevel(), skillAux.getPersonalInfoId());
-        return skillAux;
+        return getAll(Optional.empty()).getLast();
     }
 
     @Override
