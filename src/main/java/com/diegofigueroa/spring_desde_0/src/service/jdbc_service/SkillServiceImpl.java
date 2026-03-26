@@ -41,6 +41,7 @@ public class SkillServiceImpl implements ISkillService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Skill> getAll(Optional<Long> id) {
         return repository.getAll(id);
     }

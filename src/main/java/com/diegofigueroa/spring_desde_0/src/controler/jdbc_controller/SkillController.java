@@ -1,11 +1,15 @@
 package com.diegofigueroa.spring_desde_0.src.controler.jdbc_controller;
 
+import com.diegofigueroa.spring_desde_0.src.dto.SkillDto;
+import com.diegofigueroa.spring_desde_0.src.dto.SkillMapper;
 import com.diegofigueroa.spring_desde_0.src.model.jdbc_model.Skill;
 import com.diegofigueroa.spring_desde_0.src.service.jdbc_service.ISkillService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,13 +23,20 @@ public class SkillController {
     private final ISkillService service;
 
     @PostMapping
-    public ResponseEntity<Skill> create(@RequestBody Skill skill){
-        return ResponseEntity.ok(service.save(Optional.ofNullable(skill)));
+    public ResponseEntity<Skill> create(@Valid @RequestBody SkillDto skill, BindingResult result){
+
+        if (result.hasErrors()) return ResponseEntity.badRequest().build();
+
+        var skillEntity = SkillMapper.fromDto(skill, null);
+
+        return ResponseEntity.ok(service.save(Optional.ofNullable(skillEntity)));
     }
 
     @GetMapping
-    public List<Skill> getAll(@RequestParam(required = false) Long userId){
-        return service.getAll(Optional.ofNullable(userId));
+    public List<SkillDto> getAll(@RequestParam(required = false) Long userId){
+        return service.getAll(Optional.ofNullable(userId)).stream()
+                .map(SkillMapper::toDto)
+                .toList();
     }
 
     @GetMapping("/{id}")
