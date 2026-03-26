@@ -9,8 +9,7 @@ public class SkillMapper {
         if (skill == null) return null;
         return new SkillDto(
                 skill.getName(),
-                skill.getLevel(),
-                skill.getPersonalInfoId()
+                skill.getLevel()
         );
     }
 
@@ -20,7 +19,7 @@ public class SkillMapper {
                 id,
                 dto.name(),
                 dto.level(),
-                dto.personalInfoId()
+                1L
         );
     }
 }
